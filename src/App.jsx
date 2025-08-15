@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import Search from './components/search'
+import React, { useState, useEffect, StrictMode } from 'react';
+import Search from './components/Search';
 import MovieCard from './components/MovieCard';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -53,6 +53,7 @@ const App = () => {
   },[searchTerm]);
   
   return (
+    <StrictMode>
     <main>
       <div className="pattern">
         <div className="wrapper">
@@ -80,6 +81,7 @@ const App = () => {
         </div>
       </div>
     </main>
+    </StrictMode>
   )
 }
 
