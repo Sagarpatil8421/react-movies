@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Search from './components/search'
-import { Spinner } from 'flowbite-react';
 import MovieCard from './components/MovieCard';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -19,7 +18,7 @@ const App = () => {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchMovies = async ()=>{
+  const fetchMovies = async (query ='')=>{
     setIsLoading(true);
     setErrorMovieFethching('');
 
@@ -50,8 +49,8 @@ const App = () => {
   }
   
   useEffect(()=>{
-    fetchMovies()
-  },[]);
+    fetchMovies(searchTerm);
+  },[searchTerm]);
   
   return (
     <main>
