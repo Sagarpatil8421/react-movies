@@ -28,7 +28,7 @@ const TrendingMovies = () => {
 
   return (
     <div>
-      {trendingMovies && trendingMovies.length > 0 && (
+      {trendingMovies.length > 0 && (
         <section className="trending">
             <h2>Trending Movies</h2>
 
