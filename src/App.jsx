@@ -2,6 +2,7 @@ import React, { useState, useEffect, StrictMode } from 'react';
 import Search from './components/Search';
 import MovieCard from './components/MovieCard';
 import { useDebounce } from 'react-use';
+import { updateSearchCount } from './connections/appwrite';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -44,9 +45,14 @@ const App = () => {
         setMovieList([]);
         return;
       }
+      // console.log(data);
       // after getting an api response 
       setMovieList(data.results || []);
-      // console.log(data);
+      
+      //update the count when it got searched 
+      if(query && data.results.length > 0){
+        await updateSearchCount(query, data.results[0]);
+      }
       
     }catch(error){
       console.error(`Error fetching movies: ${error}`);
