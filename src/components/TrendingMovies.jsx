@@ -3,14 +3,22 @@ import { fetchTrendingMovies } from '../connections/appwrite'
 
 const TrendingMovies = () => {
     const [trendingMovies, setTrendingMovies] = useState([]);
+    const [error, setError] = useState('');
 
     const loadTrendingMoviews = async ()=>{
         try{
             const result = await fetchTrendingMovies();
             // console.log(result);
-            setTrendingMovies(result);
+            if (Array.isArray(result)) {
+                setTrendingMovies(result);
+            } else {
+                setTrendingMovies([]);
+                console.error('Expected array from fetchTrendingMovies, got:', result);
+            }
         }catch(error){
             console.log(error);
+            setError('Failed to load trending movies');
+            setTrendingMovies([]);
         }
     }
 
@@ -20,7 +28,7 @@ const TrendingMovies = () => {
 
   return (
     <div>
-      {trendingMovies.length > 0 && (
+      {trendingMovies && trendingMovies.length > 0 && (
         <section className="trending">
             <h2>Trending Movies</h2>
 
@@ -35,6 +43,7 @@ const TrendingMovies = () => {
             </ul>
         </section>
       )}
+      {error && <p className="error">{error}</p>}
     </div>
   )
 }

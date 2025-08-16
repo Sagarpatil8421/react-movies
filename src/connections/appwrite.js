@@ -17,7 +17,7 @@ export const updateSearchCount = async (searchTerm, movie)=> {
             Query.equal('searchTerm', searchTerm),
         ])
 
-        if(result.documents.length > 0){
+        if(result.documents && result.documents.length > 0){
             const doc = result.documents[0];
 
             await database.updateDocument(DATABASE_ID, COLLECTION_ID, doc.$id, {
@@ -44,8 +44,9 @@ export const fetchTrendingMovies = async ()=>{
             Query.orderDesc("count"),
         ])
 
-        return result.documents;
+        return result.documents || [];
     } catch (error) {
         console.log(error);
+        return []; // Always return an empty array instead of undefined
     }
 }
