@@ -3,6 +3,7 @@ import Search from './components/Search';
 import MovieCard from './components/MovieCard';
 import { useDebounce } from 'react-use';
 import { updateSearchCount } from './connections/appwrite';
+import TrendingMovies from './components/TrendingMovies';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -23,7 +24,7 @@ const App = () => {
 
   // Debounce the search term to prevent making too many API requests 
   // By waiting for the user to stop typing for 500ms 
-  useDebounce(()=>setDeBounceSearchTerm(searchTerm), 500, [searchTerm]);
+  useDebounce(()=>setDeBounceSearchTerm(searchTerm), 1000, [searchTerm]);
 
   const fetchMovies = async (query ='')=>{
     setIsLoading(true);
@@ -76,6 +77,8 @@ const App = () => {
             <h1>Find <span className='text-gradient'> Movies</span> You'll Enjoy Without the Hassle</h1>
             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </header>
+
+          <TrendingMovies />
 
           <section className='all-movies'>
             <h2>All Movies</h2>
